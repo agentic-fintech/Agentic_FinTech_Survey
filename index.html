@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agentic FinTech Survey</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 980px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    thead {
+      background: rgba(0,0,0,0.05);
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    }
+    pre {
+      overflow: auto;
+      padding: 12px;
+      background: rgba(0,0,0,0.05);
+    }
+    .copy-wrap {
+      position: relative;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 4px 6px;
+      font-size: 0.9rem;
+      line-height: 1;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .copy-btn:focus {
+      outline: 2px solid #888;
+      outline-offset: 2px;
+    }
+    blockquote {
+      border-left: 4px solid #bbb;
+      padding-left: 12px;
+      color: #555;
+    }
+    p {
+      text-align: justify;
+    }
+    .link-row {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<h1>Agentic FinTech Survey</h1>
+<h2>Agentic FinTech: A Comprehensive Survey on AI Agents in Finance in the Era of LLMs</h2>
+<div style="display: flex; justify-content: center; gap: 48px; text-align: center;">
+  <div>
+    <a href="https://yashonwu.github.io/">Yaxiong Wu</a><br />
+    <a href="mailto:wuyashon@gmail.com">wuyashon@gmail.com</a>
+  </div>
+  <div>
+    <a href="https://yixuanliz.github.io/">Yixuan Li</a><br />
+    <a href="mailto:yixuanli9602@gmail.com">yixuanli9602@gmail.com</a>
+  </div>
+</div>
+<p class="link-row">
+  <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6136529">📄 Paper</a> |
+  <a href="https://github.com/agentic-fintech/Agentic_FinTech_Survey">🔗 GitHub</a> |
+  <a href="https://agentic-fintech.github.io/Agentic_FinTech_Survey/">🌐 Project</a>
+</p>
+<p>As large language models (LLMs) evolve from passive text generators into autonomous financial agents with perception, planning, memory, and tool use, a new paradigm—Agentic FinTech—is emerging. This survey formalizes the paradigm by addressing three core questions: what Agentic FinTech is, why it matters, and how such systems can be built and evaluated. We characterize Agentic FinTech through key agentic capabilities, including market-grounded perception, risk-aware planning under constraints, tool use over heterogeneous financial data, long-horizon memory of prior experience, and self-improvement driven by feedback and objectives. From the perspectives of automation and autonomy, we explain why the transition toward agentic systems is essential for next-generation financial intelligence. To support practical implementation and evaluation, we review major financial application domains (e.g., trading, risk management, and regulatory compliance), summarize advances in financial agents in terms of workflows, architectures, and optimizations, and discuss evaluation methodologies, open challenges, and future research directions toward scalable, trustworthy, and efficient agentic financial systems.</p>
+<figure style="text-align: center;">
+  <img src="imgs/agentic_fintech_importance.png" alt="The Importance of Agentic FinTech" style="width: 60%; height: auto;" />
+  <figcaption>Figure 1: The Importance of Agentic FinTech.</figcaption>
+</figure>
+<h2>Evolution of FinTech</h2>
+<p><strong>FinTech 1.0 (Conventional FinTech / Digitalization)</strong> focuses on digitizing traditional financial services using Information Technologies (IT), such as Cloud Computing, Big Data and Blockchain. This stage primarily improves operational efficiency and accessibility, while financial logic remains rule-based and human-driven.</p>
+
+<p><strong>FinTech 2.0 (AI-Powered FinTech / Intelligentization)</strong> introduces Machine Learning (ML), Deep Learning (DL), and Large Language Models (LLMs) into financial workflows. AI models are used to enhance prediction, personalization, and automation in tasks such as credit assessment, fraud detection, trading, and customer service, yet most systems function as decision-support tools with limited autonomy.</p>
+
+<p><strong>FinTech 3.0 (Agentic FinTech / Autonomization)</strong> represents a paradigm shift toward autonomous, goal-driven financial systems. This stage integrates financial-domain LLMs, AI agents with perception, planning, memory and tool-use capabilities, as well as agent interaction protocols (e.g., MCP, A2A, Agent Skills), enabling end-to-end task execution, multi-agent coordination, and adaptive decision-making under dynamic market and regulatory constraints.</p>
+<figure style="text-align: center;">
+  <img src="imgs/dev_fintech.png" alt="Evolution of FinTech" style="width: 80%; height: auto;" />
+  <figcaption>Figure 2: Evolution of FinTech.</figcaption>
+</figure>
+<h2>Agentic FinTech</h2>
+<p>To establish a clear conceptual foundation, we formally define <strong>Agentic FinTech</strong> as follows.</p>
+<p><strong>Definition: Agentic FinTech</strong></p>
+<blockquote>
+<p>Agentic FinTech represents a new paradigm of financial technology systems that leverage LLM-powered agents to automate financial workflows, enabling them to autonomously perceive financial information, plan under complex market contexts, invoke prior experience, make multi-step decisions, interact with users, and continuously self-improve through feedback from their operating environments to achieve specific financial objectives.</p>
+</blockquote>
+<figure style="text-align: center;">
+  <img src="imgs/agentic_fintech.png" alt="Agentic FinTech" style="width: 80%; height: auto;" />
+  <figcaption>Figure 3: Overview of Agentic FinTech.</figcaption>
+</figure>
+
+<h2>Automation & Autonomy</h2>
+<p><strong>Automation.</strong> The introduction of intelligent automation yields several concrete benefits for financial systems:</p>
+<ol>
+  <li><strong>Operational Efficiency:</strong> automatically handling repetitive and data-intensive tasks to reduce operational costs, lower error rates, and shorten decision cycles.</li>
+  <li><strong>Enhanced Service Quality:</strong> improving user-facing financial services through faster responses, more personalized financial assistance, and continuous service availability.</li>
+  <li><strong>Human-Workforce Augmentation:</strong> allowing financial professionals to reallocate their efforts from routine operations toward higher-value analytical and strategic work.</li>
+</ol>
+<p>Collectively, these benefits demonstrate that intelligent automation transforms FinTech from rule-based task execution into scalable and adaptive financial operations capable of meeting real-time, data-rich demands.</p>
+<p><strong>Autonomy.</strong> The autonomy introduced by such agents yields several key benefits:</p>
+<ol>
+  <li><strong>Proactive Risk Mitigation:</strong> continuous monitoring and early intervention in high-stakes domains such as risk management, auditing, and fraud detection, supporting timely and compliant actions under uncertainty.</li>
+  <li><strong>Expanded Financial Inclusion:</strong> extending financial services to underserved populations via automated credit assessment and micro-finance operations.</li>
+  <li><strong>Closed-Loop Adaptive Decision-Making:</strong> autonomously planning, acting, and refining strategies through closed feedback loops, enabling end-to-end financial workflows that adjust to evolving market signals, regulatory updates, and data drift without relying on pre-specified rules.</li>
+</ol>
+<p>Collectively, these benefits transform FinTech into a collaborative, human-in-the-loop ecosystem and extend the field from static automation toward proactive financial intelligence, marking a shift toward continuously learning and self-improving financial ecosystems.</p>
+
+<h2>Implementation of Agentic FinTech</h2>
+<p>This section discusses practical pathways for implementing Agentic FinTech systems. We focus on three complementary dimensions of implementation: 
+(1) <strong>Workflows</strong> across different financial application scenarios, illustrating how agents can be embedded into end-to-end financial processes; 
+(2) <strong>Architectures</strong>, covering both single-agent and multi-agent architectures that enable autonomous perception, reasoning, and collaboration ; and 
+(3) <strong>Optimizations</strong>, which involves both non-parametric (such as prompt refinement and reflection) and parametric (such as RL) optimization strategies to ensure adaptive, efficient, and robust system behavior in dynamic financial environments.</p>
+
+
+<figure style="text-align: center;">
+<figcaption>Table 1: Implementation of Agentic FinTech.</figcaption>
+<table>
+<thead>
+<tr>
+  <th>Method</th>
+  <th>Category</th>
+  <th>Framework</th>
+  <th>Key Feature</th>
+  <th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2412.20138?">TradingAgents</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Role Specialization</td>
+  <td><a href="https://github.com/TauricResearch/TradingAgents">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/NoFxAiOS/nofx">NOFX</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Role Specialization</td>
+  <td><a href="https://github.com/NoFxAiOS/nofx">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.14264">AlphaQuanter</a></td>
+  <td>Trading</td>
+  <td>Single-Agent</td>
+  <td>Tool-Orchestrated Agentic RL</td>
+  <td><a href="https://github.com/AlphaQuanter/AlphaQuanter">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2505.15155?">R&amp;D-Agent(Q)</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Factor-Model Co-Evolving</td>
+  <td><a href="https://github.com/microsoft/RD-Agent">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.18569">QuantEvolve</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Evolutionary Optimization</td>
+  <td><a href="https://github.com/tarsyang/quantevolve">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://dl.acm.org/doi/pdf/10.1145/3711896.3736838">AlphaAgent</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Decay-Resistant Alpha Mining</td>
+  <td><a href="https://github.com/RndmVariableQ/AlphaAgent">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://aclanthology.org/2024.emnlp-main.63.pdf">CryptoTrade</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Reflective Decision Refinement</td>
+  <td><a href="https://github.com/Xtra-Computing/CryptoTrade">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2407.18957?">StockAgent</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Stock Trading Simualtion</td>
+  <td><a href="https://github.com/MingyuJ666/Stockagent">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2508.00554">ContestTrade</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Internal Contest Mechanisms</td>
+  <td><a href="https://github.com/FinStep-AI/ContestTrade">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2502.11433?">FLAG-TRADER</a></td>
+  <td>Trading</td>
+  <td>Single-Agent</td>
+  <td>Gradient-based RL</td>
+  <td><a href="https://huggingface.co/TheFinAI">Site</a></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/virattt/ai-hedge-fund">AI Hedge Fund</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Role Specialization</td>
+  <td><a href="https://github.com/virattt/ai-hedge-fund">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2509.05080">MM-DREX</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>SFT-RL for Router &amp; Experts</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2503.18313">DeepFund</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Role Specialization</td>
+  <td><a href="https://github.com/HKUSTDial/DeepFund">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2508.17565?">TradingGroup</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Self-Reflection</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.15949">ATLAS</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Prompt Optimization</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.07943?">CGA-Agent</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Genetic Algorithms</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://www.set-science.com/manage/uploads/ICOF2025_00101/SETSCI_ICOF2025_00101_002.pdf">AICrypto-Assistant</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Router &amp; Specialists</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.04787?">TiMi</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Hierarchical Optimization</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.23032">P1GPT</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Structured Reasoning Pipeline</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2502.00415?">MarketSenseAI 2.0</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Chain-of-Agents</td>
+  <td><a href="https://marketsense-ai.com/">Site</a></td>
+</tr>
+<tr>
+  <td><a href="https://ojs.aaai.org/index.php/AAAI-SS/article/download/31290/33450">FinMem</a></td>
+  <td>Trading</td>
+  <td>Multi-Agent</td>
+  <td>Adjustable Cognitive Memory</td>
+  <td><a href="https://github.com/pipiku915/FinMem-LLM-StockTrading">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2508.02292?">FinWorld</a></td>
+  <td>Multiple</td>
+  <td>Multi-Agent</td>
+  <td>All-in-One Platform</td>
+  <td><a href="https://github.com/DVampire/FinWorld">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2509.21507">QuantMind</a></td>
+  <td>IR</td>
+  <td>Multi-Agent</td>
+  <td>Extraction &amp; Retrieval</td>
+  <td><a href="https://github.com/LLMQuant/quant-mind">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770382">FinSearch</a></td>
+  <td>IR</td>
+  <td>Multi-Agent</td>
+  <td>Planner &amp; Executor</td>
+  <td><a href="https://github.com/eeeshushusang/FinSearch">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2507.22758?">MASCA</a></td>
+  <td>Credit</td>
+  <td>Multi-Agent</td>
+  <td>Multidimensional Assessment</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://aclanthology.org/2025.emnlp-industry.45.pdf">Ryt AI</a></td>
+  <td>Service</td>
+  <td>Multi-Agent</td>
+  <td>Guardrails, Intent, &amp; Action</td>
+  <td><a href="https://www.rytbank.my/ryt-ai">Site</a></td>
+</tr>
+<tr>
+  <td><a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3771251">TS-Agent</a></td>
+  <td>Forecasting</td>
+  <td>Multi-Agent</td>
+  <td>Code Base &amp; Refinement</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2511.07322">FinRpt-Gen</a></td>
+  <td>Reporting</td>
+  <td>Multi-Agent</td>
+  <td>Extraction &amp; Analysis</td>
+  <td><a href="https://github.com/jinsong8/FinRpt">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/ValueCell-ai/valuecell">ValueCell</a></td>
+  <td>Reporting</td>
+  <td>Multi-Agent</td>
+  <td>Deep Research</td>
+  <td><a href="https://github.com/ValueCell-ai/valuecell">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://aclanthology.org/2025.finnlp-2.20.pdf">FinDebate</a></td>
+  <td>Reporting</td>
+  <td>Multi-Agent</td>
+  <td>Safe Debate Protocol</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2405.14767?">FinRobot</a></td>
+  <td>Reporting</td>
+  <td>Multi-Agent</td>
+  <td>Financial Chain-of-Thought</td>
+  <td><a href="https://github.com/AI4Finance-Foundation/FinRobot">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2507.10448">FinTeam</a></td>
+  <td>Reporting</td>
+  <td>Multi-Agent</td>
+  <td>Role Specialization</td>
+  <td><a href="https://github.com/FudanDISC/DISC-FinLLM/blob/main/README-en.md">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/modelscope/ms-agent">MS-Agent FinResearch</a></td>
+  <td>Reporting</td>
+  <td>Multi-Agent</td>
+  <td>Deep Research</td>
+  <td><a href="https://github.com/modelscope/ms-agent">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.16844?">FinSight</a></td>
+  <td>Reporting</td>
+  <td>Multi-Agent</td>
+  <td>Deep Research</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.17235">Coinvisor</a></td>
+  <td>Reporting</td>
+  <td>Multi-Agent</td>
+  <td>RL-based Tool Selection</td>
+  <td><a href="https://github.com/BugmakerCC/Coinvisor">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.27251">FinPos</a></td>
+  <td>Risk</td>
+  <td>Multi-Agent</td>
+  <td>Position-Aware Trading</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2507.08584">Risk Analyst</a></td>
+  <td>Risk</td>
+  <td>Multi-Agent</td>
+  <td>Agentic Model Discovery Loop</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2506.09080?">FinHEAR</a></td>
+  <td>Risk</td>
+  <td>Multi-Agent</td>
+  <td>Adaptive Risk Modeling</td>
+  <td><a href="https://github.com/pilgrim00/FinHEAR">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2511.12599">FinRS</a></td>
+  <td>Risk</td>
+  <td>Multi-Agent</td>
+  <td>Risk-Aware Reasoning</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://openreview.net/pdf?id=frPFuji3Hz">M-SAEA</a></td>
+  <td>Risk</td>
+  <td>Multi-Agent</td>
+  <td>Multi Safety-Aware Evaluation</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770383">AuditAgent</a></td>
+  <td>Fraud</td>
+  <td>Multi-Agent</td>
+  <td>Cross-Doc Fraud Discovery</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2509.10546">RCA</a></td>
+  <td>Regulatory</td>
+  <td>Multi-Agent</td>
+  <td>Risk-Concealment Attacks</td>
+  <td><a href="https://github.com/gcheng128/RCA/">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2508.11152?">AlphaAgents</a></td>
+  <td>Portfolio</td>
+  <td>Multi-Agent</td>
+  <td>Role Specialization</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://proceedings.neurips.cc/paper_files/paper/2024/file/f7ae4fe91d96f50abc2211f09b6a7e49-Paper-Conference.pdf">FinCon</a></td>
+  <td>Trading &amp; Portfolio</td>
+  <td>Multi-Agent</td>
+  <td>Manager-Analyst Hierarchy &amp; Dual-Level Risk Control</td>
+  <td><a href="https://github.com/The-FinAI/FinCon">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://dl.acm.org/doi/pdf/10.1145/3766918.3766944">Wealth-Voyager</a></td>
+  <td>Portfolio</td>
+  <td>Multi-Agent</td>
+  <td>Strategic Asset Allocation</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2501.00826?">MACI</a></td>
+  <td>Portfolio</td>
+  <td>Multi-Agent</td>
+  <td>Inter-/Intra-Team Collaboration</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2505.10278">MASS</a></td>
+  <td>Portfolio</td>
+  <td>Multi-Agent</td>
+  <td>Optimal Investor Distribution</td>
+  <td><a href="https://github.com/gta0804/MASS">GitHub</a></td>
+</tr>
+</tbody>
+</table>
+</figure>
+
+<figure style="text-align: center;">
+  <img src="imgs/agentic_fintech_architectures.png" alt="Overview of Agentic FinTech Architectures" style="width: 80%; height: auto;" />
+  <figcaption>Figure 4: Overview of Agentic FinTech Architectures.</figcaption>
+</figure>
+
+
+<h2>Datasets &amp; Benchmarks of Agentic FinTech</h2>
+
+<figure style="text-align: center;">
+<figcaption>Table 2: Datasets &amp; Benchmarks of Agentic FinTech.</figcaption>
+<table>
+<thead>
+<tr>
+  <th>Method</th>
+  <th>Category</th>
+  <th>Type</th>
+  <th>Key Feature</th>
+  <th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2009.11189">Qlib</a></td>
+  <td>Trading</td>
+  <td>Platform</td>
+  <td>Quantitative Investment</td>
+  <td><a href="https://github.com/microsoft/qlib">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2011.09607">FinRL</a></td>
+  <td>Trading</td>
+  <td>Framework</td>
+  <td>Financial RL Framework</td>
+  <td><a href="https://github.com/AI4Finance-Foundation/FinRL">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://aclanthology.org/2025.acl-long.126.pdf">InvestorBench</a></td>
+  <td>Trading</td>
+  <td>Benchmark</td>
+  <td>Financial Decision Making</td>
+  <td><a href="https://github.com/felis33/INVESTOR-BENCH">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2512.02261">TradeTrap</a></td>
+  <td>Trading</td>
+  <td>Framework</td>
+  <td>Stress-Testing Trading</td>
+  <td><a href="https://github.com/Yanlewen/TradeTrap">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2502.01506">TwinMarket</a></td>
+  <td>Trading</td>
+  <td>Simulation</td>
+  <td>Stock Market Simulation</td>
+  <td><a href="https://github.com/FreedomIntelligence/TwinMarket">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://aclanthology.org/anthology-files/anthology-files/pdf/findings/2025.findings-emnlp.294.pdf">Agent Trading Arena</a></td>
+  <td>Trading</td>
+  <td>Simulation</td>
+  <td>Virtual Zero-Sum Stock Market</td>
+  <td><a href="https://github.com/wekjsdvnm/Agent-Trading-Arena">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2503.18313">DeepFund</a></td>
+  <td>Trading</td>
+  <td>Benchmark</td>
+  <td>Real-Time Fund Investment</td>
+  <td><a href="https://github.com/HKUSTDial/DeepFund">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.11695">Agent Market Arena</a></td>
+  <td>Trading</td>
+  <td>Benchmark</td>
+  <td>Live Multi-Market Trading</td>
+  <td><a href="https://ama.thefin.ai/live">Site</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2511.03628">LiveTradeBench</a></td>
+  <td>Trading</td>
+  <td>Benchmark</td>
+  <td>Live Trading Environment</td>
+  <td><a href="https://github.com/ulab-uiuc/live-trade-bench">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://proceedings.neurips.cc/paper_files/paper/2022/file/0bf54b80686d2c4dc0808c2e98d430f7-Paper-Datasets_and_Benchmarks.pdf">FinRL-Meta</a></td>
+  <td>Trading</td>
+  <td>Benchmark</td>
+  <td>Data-Driven Financial RL</td>
+  <td><a href="https://github.com/AI4Finance-Foundation/FinRL-Meta">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.07920?">FinLake-Bench</a></td>
+  <td>Trading</td>
+  <td>Benchmark</td>
+  <td>Leakage-Robust Evaluation</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2505.07078?">FINSABER</a></td>
+  <td>Trading</td>
+  <td>Framework</td>
+  <td>Evaluating Trading Strategies</td>
+  <td><a href="https://github.com/waylonli/FINSABER">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.02209?">StockBench</a></td>
+  <td>Trading</td>
+  <td>Benchmark</td>
+  <td>Stock Trading Decision-Making</td>
+  <td><a href="https://github.com/ChenYXxxx/stockbench">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2502.18834?">FinTSB</a></td>
+  <td>Forecasting</td>
+  <td>Benchmark</td>
+  <td>Time Series Forecasting</td>
+  <td><a href="https://github.com/TongjiFinLab/FinTSB">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2601.05039">FinDeepForecastBench</a></td>
+  <td>Forecasting</td>
+  <td>Benchmark</td>
+  <td>Forecasting at Corporate &amp; Macro Levels</td>
+  <td><a href="https://openfinarena.com/fin-deep-forecast">Site</a></td>
+</tr>
+<tr>
+  <td><a href="https://aclanthology.org/2021.emnlp-main.300.pdf">FinQA</a></td>
+  <td>QA</td>
+  <td>Dataset</td>
+  <td>Numerical Reasoning</td>
+  <td><a href="https://github.com/czyssrs/FinQA">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2210.03849">ConvFinQA</a></td>
+  <td>QA</td>
+  <td>Dataset</td>
+  <td>Conversational Finance QA</td>
+  <td><a href="https://github.com/czyssrs/ConvFinQA">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://aclanthology.org/2025.naacl-long.318.pdf">FinEval 1.0</a></td>
+  <td>QA</td>
+  <td>Benchmark</td>
+  <td>Financial Domain Knowledge &amp; Practical Abilities of LLMs</td>
+  <td><a href="https://github.com/SUFE-AIFLM-Lab/FinEval">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/Duxiaoman-DI/XuanYuan/tree/main/FinanceIQ">FinanceIQ</a></td>
+  <td>QA</td>
+  <td>Dataset</td>
+  <td>Chinese Financial Knowledge</td>
+  <td><a href="https://github.com/Duxiaoman-DI/XuanYuan/tree/main/FinanceIQ">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://openreview.net/pdf?id=86DunY8cY5">BizFinBench</a></td>
+  <td>QA</td>
+  <td>Benchmark</td>
+  <td>Business-Driven Real-World Financial Benchmark</td>
+  <td><a href="https://github.com/HiThink-Research/BizFinBench">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://aclanthology.org/2025.emnlp-main.292.pdf">OmniEval</a></td>
+  <td>QA</td>
+  <td>Benchmark</td>
+  <td>Omnidirectional &amp; Automatic RAG in Finance Domain</td>
+  <td><a href="https://github.com/RUC-NLPIR/OmniEval">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770362">FinAgentBench</a></td>
+  <td>QA</td>
+  <td>Benchmark</td>
+  <td>Agentic Retrieval with Multi-Step Reasoning in Financial QA</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2509.13160?">FinSearchComp</a></td>
+  <td>QA</td>
+  <td>Benchmark</td>
+  <td>Expert-Level Evaluation of Financial Search and Reasoning</td>
+  <td><a href="https://randomtutu.github.io/FinSearchComp/">Site</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2505.17471">FinRAGBench-V</a></td>
+  <td>QA</td>
+  <td>Benchmark</td>
+  <td>Visual RAG in Finance</td>
+  <td><a href="https://github.com/zhaosuifeng/FinRAGBench-V">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://aclanthology.org/2025.emnlp-main.1229.pdf">VisFinEval</a></td>
+  <td>QA</td>
+  <td>Benchmark</td>
+  <td>Chinese Financial Knowledge</td>
+  <td><a href="https://github.com/SUFE-AIFLM-Lab/VisFinEval">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://dl.acm.org/doi/pdf/10.1145/3746027.3758230">MME-Finance</a></td>
+  <td>QA</td>
+  <td>Benchmark</td>
+  <td>Bilingual Multimodal Financial QA for Expert-level Reasoning</td>
+  <td><a href="https://github.com/HiThink-Research/MME-Finance">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2511.07322">FinRpt</a></td>
+  <td>Reporting</td>
+  <td>Benchmark</td>
+  <td>Equity Research Report (ERR) Generation</td>
+  <td><a href="https://huggingface.co/datasets/jinsong8/FinRpt">Site</a></td>
+</tr>
+<tr>
+  <td><a href="https://www.preprints.org/frontend/manuscript/bacdf98d0b691e23b27008acd8360efe/download_pub">FinDocResearch</a></td>
+  <td>Reporting</td>
+  <td>Benchmark</td>
+  <td>Analyzing a Listed Company's Multi-Year Annual Reports</td>
+  <td><a href="https://openfinarena.com/fin-doc-research">Site</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2510.13936?">FinDeepResearch</a></td>
+  <td>Reporting</td>
+  <td>Benchmark</td>
+  <td>Corporate Financial Analysis</td>
+  <td><a href="https://openfinarena.com/fin-deep-research">Site</a></td>
+</tr>
+<tr>
+  <td><a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770364">FinResearchBench</a></td>
+  <td>Reporting</td>
+  <td>Framework</td>
+  <td>Logic Tree based Agent-as-a-Judge Evaluation Framework</td>
+  <td>-</td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2502.12904">Fraud-R1</a></td>
+  <td>Fraud</td>
+  <td>Benchmark</td>
+  <td>LLMs' Resistance to Fraud</td>
+  <td><a href="https://github.com/kaustpradalab/Fraud-R1">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2511.06448">MultiAgentFraudBench</a></td>
+  <td>Fraud</td>
+  <td>Simulation</td>
+  <td>Financial-Fraud Simulation</td>
+  <td><a href="https://github.com/zheng977/MutiAgent4Fraud">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2509.10546">FIN-Bench</a></td>
+  <td>Regulatory</td>
+  <td>Benchmark</td>
+  <td>LLM Jailbreaks under Regulatory Criteria</td>
+  <td><a href="https://github.com/gcheng128/RCA/">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2507.16802">Finova</a></td>
+  <td>Multiple</td>
+  <td>Benchmark</td>
+  <td>Financial Operable and Verifiable Agent Benchmark</td>
+  <td><a href="https://github.com/antgroup/Finova">GitHub</a></td>
+</tr>
+<tr>
+  <td><a href="https://arxiv.org/pdf/2505.13533">FinMaster</a></td>
+  <td>Multiple</td>
+  <td>Benchmark</td>
+  <td>Full-Pipeline Financial Workflows</td>
+  <td><a href="https://jianginsight.github.io/Finmaster_leaderboard/">Site</a></td>
+</tr>
+</tbody>
+</table>
+</figure>
+
+<h2>Conclusion</h2>
+
+<p>In this survey, we systematically review and synthesize prior studies to establish Agentic FinTech as a unified paradigm for designing, implementing, and evaluating LLM-powered financial agent systems.</p>
+<ul>
+  <li>We first clarify <strong>what Agentic FinTech is</strong> by formalizing its core concepts and characterizing the components, protocols, architectures, and capabilities that underpin AI agents in modern financial environments.</li>
+  <li>We then explain <strong>why Agentic FinTech is necessary</strong>, highlighting <strong>how the shift from automation to autonomy</strong> enables more adaptive, proactive, and scalable financial systems under complex and dynamic conditions.</li>
+  <li>Building on these foundations, we examine <strong>how Agentic FinTech can be implemented and evaluated</strong> in practice. Specifically, we review representative design strategies across ten major financial application scenarios, and summarize prevailing evaluation methodologies that assess both agentic capabilities and financial outcomes.</li>
+  <li>Finally, we analyze the <strong>limitationsof existing work</strong>  and outline promising <strong>future research directions</strong>, including trustworthiness, efficiency, multimodality, infrastructure, and ecosystem considerations.</li>
+</ul>
+<p>Overall, this survey provides a comprehensive reference and conceptual framework for advancing research and practice toward trustworthy, effective, and industry-ready Agentic FinTech systems.</p>
+
+
+<h2>Citation</h2>
+<div class="copy-wrap">
+  <button class="copy-btn" type="button" data-copy-target="citation-bib" aria-label="Copy citation">⿻</button>
+  <pre><code id="citation-bib" class="language-latex">@article{wu2026agenticfintech,
+  title   = {Agentic FinTech: A Comprehensive Survey on AI Agents in Finance in the Era of LLMs},
+  author  = {Wu, Yaxiong and Li, Yixuan},
+  journal = {SSRN},
+  year    = {2026},
+  month   = jan,
+  note    = {Available at SSRN: https://ssrn.com/abstract=6136529},
+  doi     = {10.2139/ssrn.6136529}
+}
+</code></pre>
+</div>
+
+<script>
+  (function () {
+    const btns = document.querySelectorAll('button[data-copy-target]');
+    btns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const targetId = btn.getAttribute('data-copy-target');
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        const text = target.innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+          const prev = btn.innerText;
+          btn.innerText = 'Copied';
+          setTimeout(() => (btn.innerText = prev), 1200);
+        } catch (e) {
+          const range = document.createRange();
+          range.selectNodeContents(target);
+          const sel = window.getSelection();
+          if (!sel) return;
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
